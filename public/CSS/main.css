@@ -1,0 +1,270 @@
+/* ========================= */
+/*       BASE / RESET        */
+/* ========================= */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: #1e1e1e;
+    color: #00ff00;
+    line-height: 1.5;
+}
+
+/* ========================= */
+/*        HEADER             */
+/* ========================= */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #111;
+    border-bottom: 2px solid #00bfff;
+    position: relative;
+    z-index: 1001;
+}
+
+header img#logo {
+    height: 40px;
+}
+
+#title {
+    color: #00bfff;
+    margin-left: 10px;
+    font-size: 1.5rem;
+}
+
+/* BURGER BUTTON */
+#burger {
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: #00ff00;
+    cursor: pointer;
+}
+
+/* ========================= */
+/*       NAVIGATION          */
+/* ========================= */
+#main-nav {
+    position: fixed;
+    top: 0;
+    right: -260px;
+    width: 250px;
+    height: 100%;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    padding: 60px 20px;
+    transition: right 0.3s ease;
+    border-left: 2px solid #00bfff;
+    z-index: 1000;
+}
+
+#main-nav.open {
+    right: 0;
+}
+
+#main-nav a {
+    color: #00ff00;
+    text-decoration: none;
+    margin: 12px 0;
+    font-size: 1.1rem;
+}
+
+#main-nav a:hover {
+    color: #00bfff;
+}
+
+/* OVERLAY */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    z-index: 900;
+}
+
+#overlay.active {
+    display: block;
+}
+
+/* ========================= */
+/*        MAIN               */
+/* ========================= */
+main {
+    padding: 30px 20px;
+}
+
+/* Hero Section */
+#root, #hero {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#root h1, #hero h1 {
+    font-size: 2rem;
+}
+
+#root p, #hero p {
+    font-size: 1.1rem;
+}
+
+/* About Section */
+#about {
+    max-width: 700px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+/* Projects Section */
+#projects h2 {
+    color: #00bfff;
+    margin-bottom: 20px;
+}
+
+.container, .projects-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Project Cards */
+.block {
+    background: #111;
+    border: 1px solid #00bfff;
+    padding: 20px;
+    width: 260px;
+    border-radius: 8px;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.block:hover {
+    transform: translateY(-5px);
+    border-color: #00ff00;
+}
+
+.license {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 5px 0;
+}
+
+/* ========================= */
+/*         FOOTER            */
+/* ========================= */
+footer {
+    background: #111;
+    border-top: 2px solid #00bfff;
+    padding: 15px 20px;
+    text-align: center;
+    font-family: monospace;
+    color: #00ff00;
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: #00bfff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Footer links vertical for mobile */
+.footer-links {
+    margin: 10px 0;
+}
+
+.footer-extra {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* ========================= */
+/*       RESPONSIVE          */
+/* ========================= */
+
+/* Tablets */
+@media (max-width: 768px) {
+    #title {
+        font-size: 1.3rem;
+    }
+
+    #root h1, #hero h1 {
+        font-size: 1.6rem;
+    }
+
+    #root p, #hero p {
+        font-size: 1rem;
+    }
+
+    .projects-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .project {
+        width: 80%;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    header {
+        padding: 10px 15px;
+    }
+
+    #logo {
+        height: 30px;
+    }
+
+    #title {
+        font-size: 1.1rem;
+    }
+
+    #burger {
+        font-size: 1.5rem;
+    }
+
+    #main-nav {
+        width: 200px;
+        padding: 50px 15px;
+    }
+
+    #main-nav a {
+        font-size: 1rem;
+    }
+
+    main {
+        padding: 20px 15px;
+    }
+
+    #root h1, #hero h1 {
+        font-size: 1.4rem;
+    }
+
+    .project {
+        width: 100%;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .footer-extra {
+        font-size: 0.7rem;
+    }
+}
