@@ -8,7 +8,6 @@ const cf = new Cloudflare({
 });
 
 const PORT = process.env.PORT;
-const HOST = process.env.HOST;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const activeIPs = {};
@@ -73,6 +72,13 @@ app.use((req, res, next) =>{
 
     next();
 });
+const ALLOWED_IP = process.env.HOST;
+
+app.use((req, res, next) => {
+    if (req.ip !== ALLOWED_IP) return res.status(403).send('Forbidden');
+    next();
+});
+
 app.set('view engine', 'ejs');
 app.use(express.static(join(__dirname, "public")));
 
@@ -84,6 +90,6 @@ app.get('/projects', (req, res) => {
     res.render("projects");
 });
 
-app.listen(PORT, HOST, () => {
+app.listen(PORT,"0.0.0.0",  () => {
     console.info(`http://${HOST}:${PORT}`);
 });
