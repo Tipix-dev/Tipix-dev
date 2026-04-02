@@ -8,7 +8,7 @@ const cf = new Cloudflare({
 });
 
 const PORT = process.env.PORT;
-const HOST = "localhost";
+const HOST = process.env.HOST;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const activeIPs = {};
@@ -16,7 +16,7 @@ const limit = 20;
 const interval = 60 * 1000;
 const blockDuration = 30 * 60 * 1000;
 let cachedZoneId = null;
-const domain = 'www.tipix.dev';
+const domain = 'tipix.onrender.com';
 
 let app = express();
 app.use((req, res, next) =>{
