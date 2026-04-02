@@ -73,12 +73,12 @@ app.use((req, res, next) =>{
     next();
 });
 const ALLOWED_IP = process.env.HOST;
-
+/*
 app.use((req, res, next) => {
     if (req.ip !== ALLOWED_IP) return res.status(403).send('Forbidden');
     next();
 });
-
+*/
 app.set('view engine', 'ejs');
 app.use(express.static(join(__dirname, "public")));
 
