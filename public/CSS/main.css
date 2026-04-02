@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
 
 /* ========================= */
 /*       BASE / RESET        */
@@ -22,25 +22,18 @@ body {
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* ключевая штука */
     padding: 15px 20px;
     background: #111;
     border-bottom: 2px solid #00bfff;
-    position: relative;
-    z-index: 1001;
-}
-
-header img#logo {
-    height: 40px;
 }
 
 #title {
     color: #00bfff;
-    margin-left: 10px;
     font-size: 1.5rem;
+    white-space: nowrap; /* чтобы не переносился */
 }
 
-/* BURGER BUTTON */
 #burger {
     font-size: 1.8rem;
     background: none;
@@ -105,28 +98,30 @@ main {
     padding: 30px 20px;
 }
 
-/* Hero / Root Section */
-#root, #hero {
+/* Hero / Root */
+#root {
     text-align: center;
     margin-bottom: 40px;
 }
 
-#root h1, #hero h1 {
+#root h1 {
     font-size: 2rem;
 }
 
-#root p, #hero p {
+#root p {
     font-size: 1.1rem;
 }
 
-/* About Section */
+/* About */
 #about {
     max-width: 700px;
     margin: 0 auto 50px;
     text-align: center;
 }
 
-/* Projects Section */
+/* ========================= */
+/*        PROJECTS           */
+/* ========================= */
 #projects h2 {
     color: #00bfff;
     margin-bottom: 20px;
@@ -140,16 +135,15 @@ main {
     justify-content: center;
 }
 
-/* Project Cards */
+/* Cards */
 .block {
     background: #111;
     border: 1px solid #00bfff;
     padding: 20px;
     width: 260px;
     border-radius: 8px;
-    transition: transform 0.2s, border-color 0.2s;
     text-align: center;
-    margin: 0 auto;
+    transition: transform 0.2s, border-color 0.2s;
 }
 
 .block:hover {
@@ -171,7 +165,6 @@ footer {
     border-top: 2px solid #00bfff;
     padding: 15px 20px;
     text-align: center;
-    font-family: monospace;
     color: #00ff00;
     font-size: 0.9rem;
 }
@@ -185,37 +178,22 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* Footer links vertical for mobile */
-.footer-links {
-    margin: 10px 0;
-}
-
-.footer-extra {
-    font-size: 0.8rem;
-    color: #888;
-}
-
 /* ========================= */
 /*       RESPONSIVE          */
 /* ========================= */
 
-/* Tablets */
+/* Tablet */
 @media (max-width: 768px) {
     #title {
         font-size: 1.3rem;
     }
 
-    #root h1, #hero h1 {
+    #root h1 {
         font-size: 1.6rem;
     }
 
-    #root p, #hero p {
+    #root p {
         font-size: 1rem;
-    }
-
-    .projects-container {
-        flex-direction: column;
-        align-items: center;
     }
 
     .block {
@@ -223,45 +201,25 @@ footer a:hover {
     }
 }
 
-/* Mobile phones */
+/* Mobile */
 @media (max-width: 480px) {
-
-    /* Header */
     header {
-        flex-direction: row;
-        gap: 10px;
         padding: 10px 15px;
-    }
-
-    header img#logo {
-        height: 30px;
     }
 
     #title {
         font-size: 1.2rem;
-        margin-left: 0;
-        text-align: center;
-        flex-shrink: 1;
     }
 
     #burger {
         font-size: 1.5rem;
-        align-self: flex-end;
-        margin-top: 5px;
     }
 
-    /* Main padding */
     main {
         padding: 15px;
     }
 
-    /* Hero text */
-    #root h1, #hero h1 {
-        font-size: 1.4rem;
-    }
-
-    /* Projects */
-    #projects h2 {
+    #root h1 {
         font-size: 1.4rem;
     }
 
@@ -274,17 +232,5 @@ footer a:hover {
     .block {
         width: 100%;
         max-width: 400px;
-        margin: 0 auto;
-    }
-
-    /* Footer */
-    .footer-links {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .footer-extra {
-        font-size: 0.7rem;
     }
 }
