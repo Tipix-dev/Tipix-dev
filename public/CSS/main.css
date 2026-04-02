@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
 /* ========================= */
 /*       BASE / RESET        */
 /* ========================= */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -105,7 +105,7 @@ main {
     padding: 30px 20px;
 }
 
-/* Hero Section */
+/* Hero / Root Section */
 #root, #hero {
     text-align: center;
     margin-bottom: 40px;
@@ -213,7 +213,7 @@ footer a:hover {
         font-size: 1rem;
     }
 
-    .projects-container, .container {
+    .projects-container {
         flex-direction: column;
         align-items: center;
     }
@@ -225,44 +225,47 @@ footer a:hover {
 
 /* Mobile phones */
 @media (max-width: 480px) {
+
+    /* Header */
     header {
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
         padding: 10px 15px;
     }
 
-    #logo {
+    header img#logo {
         height: 30px;
     }
 
     #title {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        margin-left: 0;
+        text-align: center;
     }
 
     #burger {
         font-size: 1.5rem;
+        align-self: flex-end;
+        margin-top: 5px;
     }
 
-    #main-nav {
-        width: 200px;
-        padding: 50px 15px;
-    }
-
-    #main-nav a {
-        font-size: 1rem;
-    }
-
+    /* Main padding */
     main {
         padding: 15px;
     }
 
+    /* Hero text */
     #root h1, #hero h1 {
         font-size: 1.4rem;
     }
 
+    /* Projects */
     #projects h2 {
         font-size: 1.4rem;
     }
 
-    .projects-container, .container {
+    .projects-container {
         flex-direction: column;
         align-items: center;
         gap: 15px;
@@ -274,6 +277,7 @@ footer a:hover {
         margin: 0 auto;
     }
 
+    /* Footer */
     .footer-links {
         display: flex;
         flex-direction: column;
