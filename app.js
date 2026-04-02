@@ -91,5 +91,5 @@ app.get('/projects', (req, res) => {
 });
 
 app.listen(PORT,"0.0.0.0",  () => {
-    console.info(`http://${HOST}:${PORT}`);
+    console.info(`Server running on port ${PORT}`);
 });
