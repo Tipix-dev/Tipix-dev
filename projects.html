@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home - Tipix</title>
-    <link rel="icon" type="image/png" href="/img/logo.svg">
-    <link rel="stylesheet" href="/CSS/main.css">
+    <link rel="icon" type="image/svg+xml" href="./img/logo.svg">
+    <link rel="stylesheet" href="./CSS/main.css">
 
 </head>
 <body>
-    <%- include('blocks/header.ejs') %>
+    <header>
+        <h1 id="title">Tipix</h1>
+        <button id="burger" aria-label="Toggle navigation">
+            &#9776;
+        </button>
+
+        <nav id="main-nav">
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+        </nav>
+    </header>
+
     <main>
      
       <section id="root">
@@ -39,15 +50,12 @@
       </section>
     </main>    
 
-    <%- include('blocks/footer.ejs') %>    
-    <script>
-        const burger = document.getElementById('burger');
-        const nav = document.getElementById('main-nav');
-
-        burger.addEventListener('click', () => {
-            nav.classList.toggle('open');
-            burger.classList.toggle('active');
-        });
-    </script>
+    <footer>
+        <p>Tipix.dev &copy; copyleft 2025-<span id="date"></span></p>
+        <script>
+            document.getElementById("date").textContent = new Date().getFullYear();
+        </script>
+    </footer>
+    <script src="./JS/burger.js"></script>
 </body>
 </html>
