@@ -88,13 +88,17 @@ const limiter = rateLimit({
 
 app.use(limiter);
 app.get('/', (req, res) => {
-    res.render('index');
+  res.render('index');
 });
 
 app.get('/projects', (req, res) => {
-    res.render("projects");
+  res.render("projects");
+});
+
+app.get('/p/OLS', (req, res) => {
+  res.render("projects/OLS/main")
 });
 
 app.listen(PORT,"0.0.0.0",  () => {
-    console.info(`Server running on port ${PORT}`);
+  console.info(`Server running on port ${PORT}`);
 });
