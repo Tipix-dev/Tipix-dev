@@ -120,21 +120,75 @@ main {
 
 #root p {
     font-size: 1.1rem;
+    color: #c9d1d9;
 }
 
 /* About */
 #about {
     max-width: 700px;
-    margin: 0 auto 50px;
+    margin: 0 auto 40px;
     text-align: center;
+}
+
+/* Sections */
+section {
+    max-width: 900px;
+    margin: 0 auto 40px;
+}
+
+section h2 {
+    color: #00bfff;
+    margin-bottom: 10px;
+}
+
+/* ========================= */
+/*        CODE BLOCK         */
+/* ========================= */
+pre.code {
+    background: #0f0f0f;
+    border: 1px solid #00bfff;
+    border-radius: 8px;
+    padding: 15px;
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+pre.code code {
+    color: #00ff00;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: pre;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* ========================= */
+/*        BUTTONS            */
+/* ========================= */
+a.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: transparent;
+    color: #00ff00;
+    border: 1px solid #00bfff;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+a.btn:hover {
+    background-color: #00ff00;
+    color: #111;
+    border-color: #00ff00;
+}
+
+a.btn:active {
+    transform: scale(0.97);
 }
 
 /* ========================= */
 /*        PROJECTS           */
 /* ========================= */
 #projects h2 {
-    color: #00bfff;
-    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -145,7 +199,6 @@ main {
     gap: 20px;
 }
 
-/* Карточки */
 .block {
     width: 260px;
     background: #111;
@@ -153,18 +206,12 @@ main {
     padding: 20px;
     border-radius: 8px;
     text-align: center;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: 0.2s;
 }
 
 .block:hover {
     transform: translateY(-5px);
     border-color: #00ff00;
-}
-
-.license {
-    font-size: 0.8rem;
-    color: #888;
-    margin: 5px 0;
 }
 
 /* ========================= */
@@ -175,7 +222,6 @@ footer {
     border-top: 2px solid #00bfff;
     padding: 15px 20px;
     text-align: center;
-    color: #00ff00;
     font-size: 0.9rem;
 }
 
@@ -205,6 +251,10 @@ footer a:hover {
     #root p {
         font-size: 1rem;
     }
+
+    section {
+        padding: 0 10px;
+    }
 }
 
 /* Mobile */
@@ -229,6 +279,10 @@ footer a:hover {
         font-size: 1.4rem;
     }
 
+    #root p {
+        font-size: 0.95rem;
+    }
+
     .container {
         flex-direction: column;
         align-items: center;
@@ -237,5 +291,15 @@ footer a:hover {
     .block {
         width: 100%;
         max-width: 400px;
+    }
+
+    pre.code {
+        padding: 12px;
+        font-size: 0.85rem;
+    }
+
+    a.btn {
+        width: 100%;
+        text-align: center;
     }
 }

@@ -1,0 +1,20 @@
+{
+  "name": "tipix",
+  "version": "0.1.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "type": "module",
+  "author": "Artem",
+  "license": "GPL-3.0-only",
+  "description": "",
+  "dependencies": {
+    "cloudflare": "^5.2.0",
+    "dotenv": "^17.3.1",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.3.2",
+    "marked": "^18.0.0"
+  }
+}

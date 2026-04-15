@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLS | Tipix</title>
+    <link rel="icon" type="image/png" href="/img/logo.svg">
+    <link rel="stylesheet" href="/CSS/main.css">
+</head>
+<body>
+    <%- include('../../blocks/header') %>
+    <main>
+        <section id="root">
+            <h1>OLS (Open Linux Shell)</h1>
+            <p> OLS is a toolkit of CLI utilities designed to make terminal workflows more predictable, logged, and pipeline-friendly.</p>
+        </section>
+        
+        <section id="about">
+            <h2>About</h2>
+            <p>
+                OLS is designed for GNU/Linux professionals<br>
+                minimal setup, and structured logging for terminal workflows.
+            </p>
+                <i>
+                    OLS is an early-stage MVP. Expect breaking changes. We're exploring ideas and looking for contributors.
+                </i>
+            </p>
+            <h3>warning</h3>
+            <p>IMPORTANT: OLS does not replace GNU it respects it.</p>
+        </section>
+
+        <section id="install">
+            <h2>install</h2>
+            <pre class="code"><code>curl -sSL https://raw.githubusercontent.com/Tipix-dev/OLS/main/install.sh | bash</code></pre>
+        </section>
+
+        <section id="repo">
+        <h2>Repository</h2>
+        <a href="https://github.com/Tipix-dev/OLS" target="_blank" class="btn">
+            View on GitHub
+        </a>
+        </section>
+    </main>
+    <%- include('../../blocks/footer') %>
+</body>
+</html>
