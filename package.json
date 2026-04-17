@@ -15,6 +15,7 @@
     "ejs": "^3.1.10",
     "express": "^5.2.1",
     "express-rate-limit": "^8.3.2",
-    "marked": "^18.0.0"
+    "marked": "^18.0.0",
+    "multer": "^2.1.1"
   }
 }

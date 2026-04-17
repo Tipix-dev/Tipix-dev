@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLSP hub | Tipix</title>
+</head>
+<body>
+    <%- include('../../blocks/header') %>
+    <main>
+        <div class="container">
+        <h2>OLSP Packages</h2>
+
+        <% packages.forEach(pkg => { %>
+            <div class="block">
+            <h3><%= pkg.name %></h3>
+            <p><%= pkg.description %></p>
+
+            <p>Version: <%= pkg.version %></p>
+            <p>Author: <%= pkg.author %></p>
+
+            <a href="/pkg/<%= pkg.name %>/<%= pkg.version %>" class="btn">Download</a>
+            <a href="/pkg/<%= pkg.name %>/latest" class="btn">Latest</a>
+            </div>
+        <% }) %>
+        </div>
+    </main>
+    <%- include('../../block/footer') %>
+
+</body>
+</html>

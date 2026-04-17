@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLSP upload | Tipix</title>
+    <link rel="icon" type="image/png" href="/img/logo.svg">
+    <link rel="stylesheet" href="/CSS/main.css">
+</head>
+<body>
+    <%- include('../../block/header') %>
+    <main>
+        <div class="container">
+            <form action="/api/upload" method="POST" enctype="multipart/form-data" class="block">
+                <input type="file" name="package" accept=".olsp" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        
+    </main>
+    <%- include('../../block/footer') %>
+</body>
+</html>
