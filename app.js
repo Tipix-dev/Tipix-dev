@@ -75,6 +75,18 @@ function versionExists(name, version) {
 // =====================
 app.set("view engine", "ejs");
 
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
+app.get("/projects", (req, res) => {
+  res.render("projects");
+});
+
+app.get("/p/OLS", (req, res) => {
+  res.render("projects/OLS/main");
+});
+
 app.get("/p/OLSP", (req, res) => {
   res.render("projects/OLSP/main");
 });
