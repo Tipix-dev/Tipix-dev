@@ -190,7 +190,9 @@ app.post("/api/upload", upload.single("package"), async (req, res) => {
     latest: `/pkg/${name}/latest`
   });
 });
-
+app.get("/api/upload", (req, res) => {
+  res.redirect('/p/OLSP');
+});
 // =====================
 // 🚀 START SERVER
 // =====================
