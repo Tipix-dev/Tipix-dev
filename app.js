@@ -192,12 +192,6 @@ app.post("/api/upload", upload.single("package"), async (req, res) => {
 });
 
 // =====================
-// ❌ NO GET FOR UPLOAD API
-// =====================
-app.all("/api/upload", (req, res) => {
-  return res.redirect('/p/OLSP');
-});
-// =====================
 // 🚀 START SERVER
 // =====================
 app.listen(PORT, "0.0.0.0", () => {
