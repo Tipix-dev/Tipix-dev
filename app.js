@@ -173,6 +173,10 @@ app.post("/api/upload", upload.single("package"), async (req, res) => {
   });
 });
 
+app.get("/api/upload", (req, res) => {
+  res.redirect("/p/OLSP");
+});
+
 // =====================
 // 🚀 SERVER START
 // =====================
