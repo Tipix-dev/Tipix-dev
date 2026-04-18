@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // =====================
-// 📦 PATHS
+// 📦 STORAGE
 // =====================
 const STORAGE_DIR = join(__dirname, "public/pkg");
 const TMP_DIR = "/tmp/olsp";
@@ -23,22 +23,23 @@ const INDEX_FILE = join(STORAGE_DIR, "index.json");
 });
 
 // =====================
-// 📦 INDEX
+// 📦 INDEX HELPERS
 // =====================
 function loadIndex() {
-  try {
-    if (!fs.existsSync(INDEX_FILE)) return [];
-    const raw = fs.readFileSync(INDEX_FILE, "utf-8");
-    if (!raw.trim()) return [];
-    return JSON.parse(raw);
-  } catch (e) {
-    console.error("INDEX ERROR:", e);
-    return [];
-  }
+  if (!fs.existsSync(INDEX_FILE)) return [];
+  return JSON.parse(fs.readFileSync(INDEX_FILE, "utf-8"));
 }
 
-function saveIndex(data) {
-  fs.writeFileSync(INDEX_FILE, JSON.stringify(data, null, 2));
+function saveIndex(pkg) {
+  let index = loadIndex();
+
+  index = index.filter(
+    p => !(p.name === pkg.name && p.version === pkg.version)
+  );
+
+  index.push(pkg);
+
+  fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2));
 }
 
 // =====================
@@ -46,17 +47,23 @@ function saveIndex(data) {
 // =====================
 const upload = multer({
   storage: multer.diskStorage({
-    destination: TMP_DIR,
+    destination: (req, file, cb) => cb(null, TMP_DIR),
     filename: (req, file, cb) => {
       cb(null, `${Date.now()}-${file.originalname}`);
     }
-  })
+  }),
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.endsWith(".olsp")) {
+      return cb(new Error("ONLY_OLSP_ALLOWED"));
+    }
+    cb(null, true);
+  }
 });
 
 // =====================
-// 📦 READ PACKAGE
+// 📦 READ PACKAGE.JSON FROM TAR
 // =====================
-async function readPackage(filePath) {
+async function readPackageFromArchive(filePath) {
   const tempDir = fs.mkdtempSync("/tmp/olsp-");
 
   try {
@@ -68,15 +75,11 @@ async function readPackage(filePath) {
     const walk = (dir) => {
       const files = fs.readdirSync(dir);
 
-      for (const f of files) {
-        const full = join(dir, f);
+      for (const file of files) {
+        const full = join(dir, file);
 
-        if (f === "package.json") {
-          try {
-            return JSON.parse(fs.readFileSync(full, "utf-8"));
-          } catch (e) {
-            throw new Error("INVALID_PACKAGE_JSON");
-          }
+        if (file === "package.json") {
+          return JSON.parse(fs.readFileSync(full, "utf-8"));
         }
 
         if (fs.statSync(full).isDirectory()) {
@@ -89,10 +92,9 @@ async function readPackage(filePath) {
     };
 
     return walk(tempDir);
-
-  } catch (e) {
-    console.error("TAR ERROR:", e);
-    throw new Error("INVALID_ARCHIVE");
+  } catch (err) {
+    console.error("readPackage error:", err);
+    return null;
   } finally {
     fs.rmSync(tempDir, { recursive: true, force: true });
   }
@@ -102,8 +104,12 @@ async function readPackage(filePath) {
 // 📦 VERSION CHECK
 // =====================
 function versionExists(name, version) {
-  const index = loadIndex();
-  return index.some(p => p.name === name && p.version === version);
+  return fs.readdirSync(STORAGE_DIR).some(file => {
+    if (!file.endsWith(".olsp")) return false;
+    const clean = file.replace(".olsp", "");
+    const [n, v] = clean.split("@");
+    return n === name && v === version;
+  });
 }
 
 // =====================
@@ -115,12 +121,21 @@ app.use(express.static(join(__dirname, "public")));
 // =====================
 // 🌐 ROUTES
 // =====================
-app.get("/", (req, res) => res.render("index"));
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
+app.get("/projects", (req, res) => {
+  res.render("projects");
+});
+
+app.get("/p/OLS", (req, res) => {
+  res.render("projects/OLS/main");
+});
 
 app.get("/p/OLSP", (req, res) => {
-  res.render("projects/OLSP/main", {
-    packages: loadIndex()
-  });
+  const packages = loadIndex();
+  res.render("projects/OLSP/main", { packages });
 });
 
 app.get("/p/OLSP/upload", (req, res) => {
@@ -128,78 +143,62 @@ app.get("/p/OLSP/upload", (req, res) => {
 });
 
 // =====================
-// 📦 UPLOAD
+// 📦 UPLOAD PIPELINE
 // =====================
 app.post("/api/upload", upload.single("package"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ ok: false, error: "NO_FILE" });
-    }
+  if (!req.file) {
+    return res.status(400).json({ ok: false, error: "NO_FILE" });
+  }
 
-    const pkg = await readPackage(req.file.path);
+  const pkg = await readPackageFromArchive(req.file.path);
 
-    if (!pkg || !pkg.name || !pkg.version) {
-      fs.unlinkSync(req.file.path);
-      return res.status(400).json({
-        ok: false,
-        error: "INVALID_PACKAGE"
-      });
-    }
-
-    const {
-      name,
-      version,
-      description = "",
-      author = ""
-    } = pkg;
-
-    if (versionExists(name, version)) {
-      fs.unlinkSync(req.file.path);
-      return res.status(409).json({
-        ok: false,
-        error: "VERSION_ALREADY_EXISTS"
-      });
-    }
-
-    const finalName = `${name}@${version}.olsp`;
-    const finalPath = join(STORAGE_DIR, finalName);
-
-    // 🔥 FIX: вместо rename (чтобы не падало на Render)
-    fs.copyFileSync(req.file.path, finalPath);
+  if (!pkg || !pkg.name || !pkg.version) {
     fs.unlinkSync(req.file.path);
+    return res.status(400).json({ ok: false, error: "INVALID_PACKAGE" });
+  }
 
-    // 📦 обновляем индекс
-    const index = loadIndex();
-    index.push({ name, version, description, author });
-    saveIndex(index);
+  const { name, version, description, author } = pkg;
 
-    return res.json({
-      ok: true,
-      name,
-      version,
-      description,
-      author,
-      url: `/pkg/${name}/${version}`,
-      latest: `/pkg/${name}/latest`
-    });
-
-  } catch (e) {
-    console.error("UPLOAD CRASH:", e);
-
-    return res.status(500).json({
+  if (versionExists(name, version)) {
+    fs.unlinkSync(req.file.path);
+    return res.status(409).json({
       ok: false,
-      error: e.message || "SERVER_ERROR"
+      error: "VERSION_ALREADY_EXISTS"
     });
   }
-});
 
-// ❌ запрещаем GET
-app.all("/api/upload", (req, res) => {
-  res.status(405).send("Use POST");
+  const finalName = `${name}@${version}.olsp`;
+  const finalPath = join(STORAGE_DIR, finalName);
+
+  fs.renameSync(req.file.path, finalPath);
+
+  saveIndex({
+    name,
+    version,
+    description: description || "",
+    author: author || ""
+  });
+
+  return res.json({
+    ok: true,
+    name,
+    version,
+    description,
+    author,
+    file: finalName,
+    url: `/pkg/${name}/${version}`,
+    latest: `/pkg/${name}/latest`
+  });
 });
 
 // =====================
-// 🚀 START
+// ❌ NO GET FOR UPLOAD API
+// =====================
+app.all("/api/upload", (req, res) => {
+  return res.redirect('/p/OLSP');
+});
+// =====================
+// 🚀 START SERVER
 // =====================
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`OLSP running on ${PORT}`);
