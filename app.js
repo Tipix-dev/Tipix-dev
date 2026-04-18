@@ -170,13 +170,18 @@ app.post("/api/upload", upload.single("package"), async (req, res) => {
   const finalName = `${name}@${version}.olsp`;
   const finalPath = join(STORAGE_DIR, finalName);
 
-  fs.renameSync(req.file.path, finalPath);
-
+  try {
+    fs.copyFileSync(req.file.path, finalPath);
+    fs.unlinkSync(req.file.path);
+  } catch (err) {
+    console.error("FS ERROR:", err);
+    return res.status(500).json({ ok: false, error: "FS_ERROR" });
+  }
   saveIndex({
     name,
     version,
-    description: description || "",
-    author: author || ""
+    description: description || "not description",
+    author: author || "anonim"
   });
 
   return res.json({
