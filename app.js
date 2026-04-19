@@ -136,6 +136,7 @@ function sha256(filePath) {
 // =====================
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
+app.set("view engine", "ejs");
 
 
 app.get("/", (req, res) => {
